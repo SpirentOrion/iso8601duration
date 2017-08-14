@@ -4,9 +4,28 @@ import (
 	"testing"
 	"time"
 
-	duration "github.com/channelmeter/iso8601duration"
+	duration "github.com/SpirentOrion/iso8601duration"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestFromDuration(t *testing.T) {
+	t.Parallel()
+
+	tot := time.Duration((1 * 365 * 24 * time.Hour) +
+		(2 * 7 * 24 * time.Hour) +
+		(3 * 24 * time.Hour) +
+		(4 * time.Hour) +
+		(5 * time.Minute) +
+		(6 * time.Second))
+	dur := duration.FromDuration(tot)
+	assert.NotNil(t, dur)
+	assert.Equal(t, 1, dur.Years)
+	assert.Equal(t, 2, dur.Weeks)
+	assert.Equal(t, 3, dur.Days)
+	assert.Equal(t, 4, dur.Hours)
+	assert.Equal(t, 5, dur.Minutes)
+	assert.Equal(t, 6, dur.Seconds)
+}
 
 func TestFromString(t *testing.T) {
 	t.Parallel()

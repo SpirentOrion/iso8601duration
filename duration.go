@@ -33,6 +33,27 @@ type Duration struct {
 	Seconds int
 }
 
+func FromDuration(tot time.Duration) *Duration {
+	day := time.Hour * 24
+	week := day * 7
+	year := day * 365
+
+	d := new(Duration)
+	d.Years = int(tot / year)
+	tot -= time.Duration(d.Years) * year
+	d.Weeks = int(tot / week)
+	tot -= time.Duration(d.Weeks) * week
+	d.Days = int(tot / day)
+	tot -= time.Duration(d.Days) * day
+	d.Hours = int(tot / time.Hour)
+	tot -= time.Duration(d.Hours) * time.Hour
+	d.Minutes = int(tot / time.Minute)
+	tot -= time.Duration(d.Minutes) * time.Minute
+	d.Seconds = int(tot / time.Second)
+
+	return d
+}
+
 func FromString(dur string) (*Duration, error) {
 	var (
 		match []string
